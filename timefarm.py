@@ -288,25 +288,25 @@ def main():
                 print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Checking Farming..", end="", flush=True)
                 time.sleep(2)
                 cek_farming_response = cek_farming(token)
-                if cek_farming_response is not None:
-                    if cek_farming_response['activeFarmingStartedAt'] is None:
-                        print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming not started", flush=True)
-                        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
-                        time.sleep(2)
-                        start_farming_response = start_farming(token)
-                        if start_farming_response is not None:
-                            print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
-                        else:
-                            if 'error' in start_farming_response:
-                                if start_farming_response['error']['message'] == "Farming already started":
-                                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
-                            else:
-                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Start Farming", flush=True)
-                    else:
-                        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)                              
-        else:
-            print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Check Farming", flush=True)
-            continue
+                        if cek_farming_response is not None:
+                                if cek_farming_response['activeFarmingStartedAt'] is None:
+                                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming not started", flush=True)
+                                    print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
+                                    time.sleep(2)
+                                    start_farming_response = start_farming(token)
+                                    if start_farming_response is not None:
+                                        print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
+                                    else:
+                                        if 'error' in start_farming_response:
+                                            if start_farming_response['error']['message'] == "Farming already started":
+                                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
+                                        else:
+                                            print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
+                                else:
+                                    print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)                              
+                else:
+                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Check Farming", flush=True)
+                    continue
 
     print(Fore.BLUE + Style.BRIGHT + f"\n==========ALL ACCOUNTS PROCESSED==========\n",  flush=True)    
     animated_loading(300)
