@@ -289,7 +289,7 @@ def main():
                 time.sleep(2)
                 cek_farming_response = cek_farming(token)
                 if cek_farming_response is not None:
-                        if cek_farming_response['activeFarmingStartedAt'] is None:
+                    if cek_farming_response['activeFarmingStartedAt'] is None:
                         print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming not started", flush=True)
                         print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
                         time.sleep(2)
