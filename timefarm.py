@@ -210,108 +210,108 @@ def main():
                     tasks = cek_task(token)
 
                 if tasks:
-    for task in tasks:
-        # if "TimeFarm" in task['title']:
-        #     continue  
-        if task.get('submission', {}).get('status') == 'CLAIMED':
-            print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : {task['title']} | Claimed                                               ", flush=True)
-        elif task.get('submission', {}).get('status') == 'COMPLETED':
-            print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claiming {task['title']}", flush=True)
-            response = claim_task(token, task['id'])
-            # print(response)
-            if response is not None:
-                if 'error' in response:
-                    if response['error']['message'] == "Failed to claim reward":
-                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Already claimed", end="", flush=True)
-                else:
-                    print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Claimed", flush=True)    
-        
-        else:
-            print(f"\r[ Task ] : Submit task: {task['title']}", end="", flush=True)
-            if task.get('submission', {}).get('status') == 'SUBMITTED':
-                print(Fore.YELLOW + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | Already Submitted", flush=True)
-            else:
-                response = submit_task(token, task['id'])
-                # print(response)
-                if response is not None:
-                    if 'error' in response:
-                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | {response['error']['message']}", end="", flush=True)
-                    else:
-                        print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | Submitted", flush=True)
-                time.sleep(3)  # Wait for 3 seconds before claiming
-            print(f"\r[ Task ] : Claim task: {task['title']}", end="", flush=True)
-            response = claim_task(token, task['id'])
-            # print(response)
-            if response is not None:
-                if 'error' in response:
-                    if response['error']['message'] == "Failed to claim reward":
-                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Failed to claim reward / already claimed", end="", flush=True)
-                else:
-                    print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Claimed", flush=True)
-print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Checking ...", end="", flush=True)
-time.sleep(2)
-farming_response = finish_farming(token)
-if farming_response is not None:
-    if 'error' in farming_response:
-        if farming_response['error']['message'] == "Too early to finish farming":
-
-            cek_farming_response = cek_farming(token)
-            if cek_farming_response:
-                started_at = datetime.fromisoformat(cek_farming_response['activeFarmingStartedAt'].replace('Z', '+00:00')).astimezone(timezone.utc)
-                duration_sec = cek_farming_response['farmingDurationInSec']
-                end_time = started_at + timedelta(seconds=duration_sec)
-                time_now = datetime.now(timezone.utc)
-
-                remaining_time = end_time - time_now
-                if remaining_time.total_seconds() > 0:
-                    hours, remainder = divmod(remaining_time.total_seconds(), 3600)
-                    minutes, _ = divmod(remainder, 60)
-                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Claim farming in {int(hours)} hours {int(minutes)} minutes", flush=True)
-                else:
-                    print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Farming can be claimed now", flush=True)
-        elif farming_response['error']['message'] == "Farming didn't start":
-            print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
-            time.sleep(2)
-            start_farming_response = start_farming(token)
-            if start_farming_response is not None:
-                print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
-            else:
-                if 'error' in start_farming_response:
-                    if start_farming_response['error']['message'] == "Farming already started":
-                        print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
-                else:
-                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Start Farming", flush=True)
-        else:
-            print(f"\r[ Farming ] : {farming_response['error']['message']}", flush=True)
-    else:
-        print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Claimed | Balance: {int(farming_response['balance']):,}".replace(',', '.'), flush=True)
-        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Checking Farming..", end="", flush=True)
-        time.sleep(2)
-        cek_farming_response = cek_farming(token)
-        if cek_farming_response is not None:
-                if cek_farming_response['activeFarmingStartedAt'] is None:
-                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming not started", flush=True)
-                    print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
-                    time.sleep(2)
-                    start_farming_response = start_farming(token)
-                    if start_farming_response is not None:
-                        print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
-                    else:
-                        if 'error' in start_farming_response:
-                            if start_farming_response['error']['message'] == "Farming already started":
-                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
+                    for task in tasks:
+                        # if "TimeFarm" in task['title']:
+                        #     continue  
+                        if task.get('submission', {}).get('status') == 'CLAIMED':
+                            print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : {task['title']} | Claimed                                               ", flush=True)
+                        elif task.get('submission', {}).get('status') == 'COMPLETED':
+                            print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claiming {task['title']}", flush=True)
+                            response = claim_task(token, task['id'])
+                            # print(response)
+                            if response is not None:
+                                if 'error' in response:
+                                    if response['error']['message'] == "Failed to claim reward":
+                                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Already claimed", end="", flush=True)
+                                else:
+                                    print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Claimed", flush=True)    
+                        
                         else:
-                            print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Start Farming", flush=True)
-                else:
-                    print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)                              
-else:
-    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Check Farming", flush=True)
-    continue
+                            print(f"\r[ Task ] : Submit task: {task['title']}", end="", flush=True)
+                            if task.get('submission', {}).get('status') == 'SUBMITTED':
+                                print(Fore.YELLOW + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | Already Submitted", flush=True)
+                            else:
+                                response = submit_task(token, task['id'])
+                                # print(response)
+                                if response is not None:
+                                    if 'error' in response:
+                                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | {response['error']['message']}", end="", flush=True)
+                                    else:
+                                        print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Submit task: {task['title']} | Submitted", flush=True)
+                                time.sleep(3)  # Wait for 3 seconds before claiming
+                            print(f"\r[ Task ] : Claim task: {task['title']}", end="", flush=True)
+                            response = claim_task(token, task['id'])
+                            # print(response)
+                            if response is not None:
+                                if 'error' in response:
+                                    if response['error']['message'] == "Failed to claim reward":
+                                        print(Fore.RED + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Failed to claim reward / already claimed", end="", flush=True)
+                                else:
+                                    print(Fore.GREEN + Style.BRIGHT + f"\r[ Task ] : Claim task: {task['title']} | Claimed", flush=True)
+            print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Checking ...", end="", flush=True)
+            time.sleep(2)
+            farming_response = finish_farming(token)
+            if farming_response is not None:
+                if 'error' in farming_response:
+                    if farming_response['error']['message'] == "Too early to finish farming":
 
-print(Fore.BLUE + Style.BRIGHT + f"\n==========ALL ACCOUNTS PROCESSED==========\n",  flush=True)    
-animated_loading(300)
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
+                        cek_farming_response = cek_farming(token)
+                        if cek_farming_response:
+                            started_at = datetime.fromisoformat(cek_farming_response['activeFarmingStartedAt'].replace('Z', '+00:00')).astimezone(timezone.utc)
+                            duration_sec = cek_farming_response['farmingDurationInSec']
+                            end_time = started_at + timedelta(seconds=duration_sec)
+                            time_now = datetime.now(timezone.utc)
+
+                            remaining_time = end_time - time_now
+                            if remaining_time.total_seconds() > 0:
+                                hours, remainder = divmod(remaining_time.total_seconds(), 3600)
+                                minutes, _ = divmod(remainder, 60)
+                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Claim farming in {int(hours)} hours {int(minutes)} minutes", flush=True)
+                            else:
+                                print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Farming can be claimed now", flush=True)
+                    elif farming_response['error']['message'] == "Farming didn't start":
+                        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
+                        time.sleep(2)
+                        start_farming_response = start_farming(token)
+                        if start_farming_response is not None:
+                            print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
+                        else:
+                            if 'error' in start_farming_response:
+                                if start_farming_response['error']['message'] == "Farming already started":
+                                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
+                            else:
+                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Start Farming", flush=True)
+                    else:
+                        print(f"\r[ Farming ] : {farming_response['error']['message']}", flush=True)
+            else:
+                print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Claimed | Balance: {int(farming_response['balance']):,}".replace(',', '.'), flush=True)
+                print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Checking Farming..", end="", flush=True)
+                time.sleep(2)
+                cek_farming_response = cek_farming(token)
+                if cek_farming_response is not None:
+                        if cek_farming_response['activeFarmingStartedAt'] is None:
+                        print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming not started", flush=True)
+                        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Starting Farming..", end="", flush=True)
+                        time.sleep(2)
+                        start_farming_response = start_farming(token)
+                        if start_farming_response is not None:
+                            print(Fore.GREEN + Style.BRIGHT + f"\r[ Farming ] : Started | Reward : {int(start_farming_response['farmingReward']):,}".replace(',', '.'), flush=True)
+                        else:
+                            if 'error' in start_farming_response:
+                                if start_farming_response['error']['message'] == "Farming already started":
+                                    print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)
+                            else:
+                                print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Start Farming", flush=True)
+                    else:
+                        print(Fore.YELLOW + Style.BRIGHT + f"\r[ Farming ] : Farming Already Started", flush=True)                              
+        else:
+            print(Fore.RED + Style.BRIGHT + f"\r[ Farming ] : Failed to Check Farming", flush=True)
+            continue
+
+    print(Fore.BLUE + Style.BRIGHT + f"\n==========ALL ACCOUNTS PROCESSED==========\n",  flush=True)    
+    animated_loading(300)
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     main()
