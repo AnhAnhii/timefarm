@@ -2,19 +2,19 @@
 # TimeFarm Bot
 TimeFarm Bot . Subscribe my github and also give stars if you like this tool :) 
 
-Register Here : [TimeFarm](https://t.me/TimeFarmCryptoBot?start=qUeeRhT1womtSdi3)
+Register Here : [TimeFarm](https://t.me/TimeFarmCryptoBot?start=bvN6tv8UXgahssTr)
 
 ## Installation
 
 Install with python
 
 1. Download Python 3.10+
-2. Install Module (pip install requests colorama)
-3. Buka Bot TimeFarm di PC (Telegram Desktop)
-4. Jika sudah terbuka > Klik kanan Inspect
-5. Di Application > Session Storage > tg-mini.appxxxx >
-6. __telegram__initParams ambil tgwebappdata "query_idxxxx" tanpa kutip 
-7. py timefarm.py / py timefarm.py --task y/n
+2. Install modules (pip install requests colorama)
+3. Open the TimeFarm Bot on your PC (Telegram Desktop)
+4. Once opened > Right-click and select Inspect
+5. Go to Application > Session Storage > tg-mini.appxxxx >
+6. Copy the tgwebappdata "query_idxxxx" from __telegram__initParams without quotes
+7. Run `py timefarm.py` or `py timefarm.py --task y/n`
 
 
 ## Features
